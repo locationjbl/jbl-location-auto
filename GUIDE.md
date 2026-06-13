@@ -14,7 +14,7 @@ Petit mémo pour s'y retrouver facilement. (Aucun mot de passe ici — gardez vo
 
 | Quoi | Où |
 |---|---|
-| Dossier du projet sur mon PC | `C:\Users\boivi\OneDrive - Location JBL\Claud` |
+| Dossier du projet sur mon PC | `C:\Users\boivi\OneDrive - Location JBL\Fichier source site web Claude` |
 | Code source (open source, MIT) | https://github.com/locationjbl/jbl-location-auto |
 | Hébergement / déploiement | Vercel (projet `jbl-location-auto`) |
 | Nom de domaine | GoDaddy (`locationjbl.com`) |
