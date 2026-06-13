@@ -1,33 +1,164 @@
 @import "tailwindcss";
 
+/* =============================================================
+   THÈME SOMBRE & LUXE — JBL Location d'auto
+   Palette sombre dérivée du bleu marin de la marque (#203651),
+   accent lumineux = bleu ciel (#8BB9D6).
+   ============================================================= */
+
 :root {
-  --background: #ffffff;
-  --foreground: #0f172a;
+  /* Fonds sombres dérivés du marine */
+  --bg: #0a1420; /* fond global très sombre */
+  --bg-2: #0d1b2a; /* surface alternée */
+  --bg-3: #102236; /* surface élevée / cartes */
+  --foreground: #e8eef5; /* texte clair principal */
+  --muted: #9fb2c4; /* texte secondaire */
+}
+
+/* Expose les polices next/font comme familles utilisables. */
+@theme inline {
+  --font-display: var(--font-display);
+  --font-sans: var(--font-sans);
 }
 
 html {
   scroll-behavior: smooth;
+  background: var(--bg);
 }
 
 body {
-  background: var(--background);
+  background: var(--bg);
   color: var(--foreground);
-  font-family: var(--font-system);
+  font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden; /* aucun débordement horizontal */
 }
 
-/* Petite animation d'apparition pour les cartes */
-@keyframes fadeUp {
+/* Titres en police display par défaut */
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display), system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--primaire) 45%, transparent);
+  color: #fff;
+}
+
+/* =============================================================
+   SECTIONS CLAIRES (approche hybride)
+   Variables locales pour les sections sur fond clair (Flotte, Avis).
+   Tout le texte reste foncé (marine / gris) pour la lisibilité AA.
+   ============================================================= */
+.section-light {
+  --bg-light: #f4f7fb; /* fond clair principal (blanc cassé bleuté) */
+  --surface-light: #ffffff; /* cartes blanches */
+  --ink: #203651; /* marine — texte principal */
+  --ink-soft: #4a5e72; /* gris-marine — texte secondaire */
+  --ink-faint: #8395a6; /* gris doux — texte tertiaire */
+  --line-light: #e2e9f1; /* bordures douces */
+  background: var(--bg-light);
+  color: var(--ink);
+}
+
+/* Dégradé de transition (haut/bas) pour fondre sombre ↔ clair en DOUCEUR.
+   Multi-paliers à opacité décroissante (courbe d'atténuation) → fondu
+   beaucoup plus progressif qu'un simple dégradé linéaire. */
+.fade-from-dark {
+  background: linear-gradient(
+    to bottom,
+    var(--bg) 0%,
+    color-mix(in srgb, var(--bg) 85%, transparent) 22%,
+    color-mix(in srgb, var(--bg) 55%, transparent) 48%,
+    color-mix(in srgb, var(--bg) 25%, transparent) 72%,
+    transparent 100%
+  );
+}
+.fade-to-dark {
+  background: linear-gradient(
+    to top,
+    var(--bg-2) 0%,
+    color-mix(in srgb, var(--bg-2) 85%, transparent) 22%,
+    color-mix(in srgb, var(--bg-2) 55%, transparent) 48%,
+    color-mix(in srgb, var(--bg-2) 25%, transparent) 72%,
+    transparent 100%
+  );
+}
+
+/* --- Effet verre dépoli (glassmorphism) --- */
+.glass {
+  background: color-mix(in srgb, #ffffff 6%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid color-mix(in srgb, #ffffff 12%, transparent);
+}
+
+/* --- Lueur radiale bleu ciel réutilisable --- */
+.glow-primary {
+  background: radial-gradient(
+    closest-side,
+    color-mix(in srgb, var(--primaire) 40%, transparent),
+    transparent
+  );
+}
+
+/* --- Texte en dégradé pour titres premium --- */
+.text-gradient {
+  background: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    color-mix(in srgb, var(--primaire) 55%, #ffffff) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* --- Zoom doux et continu sur l'image de fond du héro (CSS, léger) --- */
+@keyframes heroZoom {
   from {
-    opacity: 0;
-    transform: translateY(16px);
+    transform: scale(1.05);
   }
   to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: scale(1.18);
   }
 }
+.hero-zoom {
+  animation: heroZoom 22s ease-out forwards;
+}
 
-.fade-up {
-  animation: fadeUp 0.6s ease both;
+/* --- Indicateur de scroll : la pastille qui descend --- */
+@keyframes scrollDot {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(14px);
+    opacity: 0;
+  }
+}
+.scroll-dot {
+  animation: scrollDot 1.8s ease-in-out infinite;
+}
+
+/* Accessibilité : on neutralise les animations CSS restantes si l'utilisateur
+   préfère réduire les mouvements (Framer Motion gère le reste via useReducedMotion). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-zoom,
+  .scroll-dot {
+    animation: none;
+  }
 }

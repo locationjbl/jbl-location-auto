@@ -1,5 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import Stats from "@/components/Stats";
+import Marquee from "@/components/Marquee";
 import Fleet from "@/components/Fleet";
 import About from "@/components/About";
 import Reviews from "@/components/Reviews";
@@ -12,6 +14,8 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
+        <Stats />
+        <Marquee />
         <Fleet />
         <About />
         <Reviews />
