@@ -28,6 +28,19 @@ export const site = {
   instagram: "",
   facebook: "",
 
+  // --- Zones desservies (affichées dans la section « Secteur ») ---
+  // Sert aussi au référencement local (Google). Ajoutez/retirez des villes.
+  zonesDesservies: [
+    "Saint-Hubert",
+    "Longueuil",
+    "Brossard",
+    "Boucherville",
+    "Saint-Lambert",
+    "Greenfield Park",
+    "Montréal",
+    "Rive-Sud",
+  ],
+
   // --- Couleurs de la marque (extraites de votre logo) ---
   couleurs: {
     primaire: "#8BB9D6", // bleu ciel JBL (accents, boutons sur fond foncé)

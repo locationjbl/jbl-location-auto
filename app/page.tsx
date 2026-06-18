@@ -5,6 +5,7 @@ import Marquee from "@/components/Marquee";
 import Fleet from "@/components/Fleet";
 import About from "@/components/About";
 import Reviews from "@/components/Reviews";
+import ServiceArea from "@/components/ServiceArea";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 
@@ -19,6 +20,7 @@ export default function Home() {
         <Fleet />
         <About />
         <Reviews />
+        <ServiceArea />
         <Contact />
       </main>
       <Footer />
