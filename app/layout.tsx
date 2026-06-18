@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { Sora, Manrope } from "next/font/google";
+import Script from "next/script";
 import { site } from "@/data/site";
 import "./globals.css";
+
+// Identifiant de mesure Google Analytics (gtag.js). Pour le changer ou le
+// retirer, modifiez/videz cette valeur. Ajouté une seule fois ici → couvre
+// automatiquement toutes les pages du site.
+const GA_ID = "G-C1DQDMJ3KJ";
 
 // --- Polices (next/font/google) ---
 // Sora : police d'affichage forte pour les grands titres (display).
@@ -38,7 +44,28 @@ export default function RootLayout({
 
   return (
     <html lang="fr" className={`${sora.variable} ${manrope.variable}`}>
-      <body style={styleVars}>{children}</body>
+      <body style={styleVars}>
+        {children}
+
+        {/* Google Analytics (gtag.js) — chargé après l'interactivité pour ne
+            pas ralentir l'affichage. Présent sur toutes les pages. */}
+        {GA_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
+      </body>
     </html>
   );
 }
